@@ -4,9 +4,10 @@
   "description": "GymPass style app",
   "main": "index.js",
   "scripts": {
-    "start:dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "start": "node build/server.cjs",
-    "build": "tsup src --out-dir build"
+    "build": "tsup src --out-dir build",
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +15,9 @@
   "type": "module",
   "devDependencies": {
     "@types/node": "25.9.3",
-    "typescript": "6.0.3"
+    "typescript": "6.0.3",
+    "vite-tsconfig-paths": "6.1.1",
+    "vitest": "4.1.9"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",

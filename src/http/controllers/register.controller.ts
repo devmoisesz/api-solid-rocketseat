@@ -17,6 +17,11 @@ export class RegisterController {
             password: z.string().min(6)
         })
 
+        try {
+            
+        } catch (error) {
+            
+        }
         const usersRepository = new PrismaUserRepository
         const registerUseCase = new RegisterUseCase(usersRepository)
 

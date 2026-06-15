@@ -15,6 +15,6 @@ export class RegisterUseCase{
         const password_hash = await hash(password, 6)
 
 
-        await prismaUserRepository.create({name, email, password_hash})
+        return await prismaUserRepository.create({name, email, password_hash})
     }
 }
