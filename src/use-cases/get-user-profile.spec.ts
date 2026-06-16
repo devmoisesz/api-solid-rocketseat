@@ -2,7 +2,7 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-repo
 import { expect, describe, it, beforeEach } from 'vitest'
 import { hash } from 'bcryptjs'
 import { AppError } from '@/middleware/AppError'
-import { GetUserProfileUseCase } from './use.case.get-user-profile'
+import { GetUserProfileUseCase } from './get-user-profile'
 
 let usersRepository: InMemoryUsersRepository
 let getProfileUseCase: GetUserProfileUseCase

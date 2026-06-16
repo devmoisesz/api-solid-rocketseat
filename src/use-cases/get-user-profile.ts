@@ -1,7 +1,6 @@
 import { AppError } from "@/middleware/AppError";
 import type { UsersRepository } from "@/repositories/users-repository";
 import type { User } from "@prisma/client";
-import { compare } from "bcryptjs";
 
 interface GetUserProfileUseCaseRequest{
     userId: string

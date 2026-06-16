@@ -1,6 +1,6 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-repository'
 import { expect, describe, it, beforeEach } from 'vitest'
-import { AuthenticateUseCase } from './use.case.authenticate'
+import { AuthenticateUseCase } from './authenticate'
 import { hash } from 'bcryptjs'
 import { AppError } from '@/middleware/AppError'
 

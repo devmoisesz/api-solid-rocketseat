@@ -1,7 +1,5 @@
 import { AppError } from '@/middleware/AppError'
-import { PrismaUserRepository } from '@/repositories/prisma-repository/prisma-user.repository'
 import type { UsersRepository } from '@/repositories/users-repository'
-import type { User } from '@prisma/client'
 import { hash } from 'bcryptjs'
 
 interface RegisterUseCaseRequest{
