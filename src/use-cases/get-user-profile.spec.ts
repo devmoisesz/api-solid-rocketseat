@@ -1,4 +1,4 @@
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-repository'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { expect, describe, it, beforeEach } from 'vitest'
 import { hash } from 'bcryptjs'
 import { AppError } from '@/middleware/AppError'
@@ -31,7 +31,7 @@ describe('Get User Profile Use Case', () => {
 
     it('should not be able to get user profile with wrong id', async () => {
 
-        expect(() => getProfileUseCase.execute({
+        await expect(() => getProfileUseCase.execute({
             userId: 'non-existing-id'
         })).rejects.toBeInstanceOf(AppError)
     })

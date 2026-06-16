@@ -1,4 +1,4 @@
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-repository'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { expect, describe, it, beforeEach } from 'vitest'
 import { AuthenticateUseCase } from './authenticate'
 import { hash } from 'bcryptjs'
@@ -32,7 +32,7 @@ describe('Authenticate Use Case', () => {
 
     it('should not be able to authenticate with wrong email', async () => {
 
-        expect(() => authenticateUseCase.execute({
+        await expect(() => authenticateUseCase.execute({
             email: 'johndoe@example.com',
             password: '123456',
         })).rejects.toBeInstanceOf(AppError)
@@ -46,7 +46,7 @@ describe('Authenticate Use Case', () => {
             password_hash: await hash('123456', 6)
         })
 
-        expect(() => 
+        await expect(() => 
             authenticateUseCase.execute({
                 email: 'johndoe@example.com',
                 password: '123456123',
