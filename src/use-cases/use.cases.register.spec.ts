@@ -53,7 +53,7 @@ describe('Register Use Case', () => {
             user.password_hash
         )
 
-        expect(() =>
+        await expect(() =>
             registerUseCase.execute({
                 name: 'John Doe',
                 email,
