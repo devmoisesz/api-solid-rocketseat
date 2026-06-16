@@ -28,6 +28,6 @@ export class AuthenticateUseCase {
 
         if (!doesPasswordMatches) throw new AppError('Invalid credentials', 400)
 
-        return { user }
+        return {user}
     }
 }
