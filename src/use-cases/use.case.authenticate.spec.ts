@@ -1,13 +1,20 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-repository'
-import { expect, describe, it } from 'vitest'
+import { expect, describe, it, beforeEach } from 'vitest'
 import { AuthenticateUseCase } from './use.case.authenticate'
 import { hash } from 'bcryptjs'
 import { AppError } from '@/middleware/AppError'
 
+let usersRepository: InMemoryUsersRepository
+let authenticateUseCase: AuthenticateUseCase
+
 describe('Authenticate Use Case', () => {
+    beforeEach(() => {
+        usersRepository = new InMemoryUsersRepository()
+        authenticateUseCase = new AuthenticateUseCase(usersRepository)
+    })
+
+
     it('should hash user password upon registration', async () => {
-        const usersRepository = new InMemoryUsersRepository()
-        const authenticateUseCase = new AuthenticateUseCase(usersRepository)
 
         await usersRepository.create({
             name: 'John Doe',
@@ -24,8 +31,6 @@ describe('Authenticate Use Case', () => {
     })
 
     it('should not be able to authenticate with wrong email', async () => {
-        const usersRepository = new InMemoryUsersRepository()
-        const authenticateUseCase = new AuthenticateUseCase(usersRepository)
 
         expect(() => authenticateUseCase.execute({
             email: 'johndoe@example.com',
@@ -34,8 +39,6 @@ describe('Authenticate Use Case', () => {
     })
 
     it('should not be able to authenticate with wrong password', async () => {
-        const usersRepository = new InMemoryUsersRepository()
-        const authenticateUseCase = new AuthenticateUseCase(usersRepository)
 
         await usersRepository.create({
             name: 'John Doe',
