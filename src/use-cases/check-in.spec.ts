@@ -15,13 +15,13 @@ describe('Get User Profile Use Case', () => {
         gymRepository = new InMemoryGymsRepository()
         checkInUseCase = new CheckInUseCase(checkInsRepository, gymRepository)
 
-        gymRepository.items.push({
+        gymRepository.create({
             id: 'gym-01',
             gym_name: 'Fastify Gym',
             description: '',
             phone: '',
-            latitude: new Decimal(-21.4723062),
-            longitude: new Decimal(-48.3888482),
+            latitude: -21.4723062,
+            longitude: -48.3888482,
         })
 
         vi.useFakeTimers()
@@ -57,7 +57,7 @@ describe('Get User Profile Use Case', () => {
             userId: 'user-01',
             userLatitude: -21.4723062,
             userLongitude: -48.3888482
-        })).rejects.toBeInstanceOf(Error)
+        })).rejects.toBeInstanceOf(AppError)
     })
 
     it('should be able to check in twice but in different days', async () => {

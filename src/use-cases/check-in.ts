@@ -39,14 +39,14 @@ export class CheckInUseCase {
 
         const MAX_DISTANCE_IN_KILOMETERS = 0.1
 
-        if(distance > MAX_DISTANCE_IN_KILOMETERS) throw new AppError('', 0)
+        if(distance > MAX_DISTANCE_IN_KILOMETERS) throw new AppError('Max-distance reached', 400)
 
         const checkInOnSameDate = await this.checkInsRepository.findByUserIdOnDate(
             userId,
             new Date()
         )
 
-        if(checkInOnSameDate) throw new AppError('', 400)
+        if(checkInOnSameDate) throw new AppError('Max number of check-ins reached', 400)
 
         const checkIn = await this.checkInsRepository.create({
             gym_id: gymId,
