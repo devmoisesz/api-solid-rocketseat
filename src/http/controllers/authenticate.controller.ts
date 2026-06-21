@@ -23,10 +23,20 @@ export class AuthenticateController {
         const authenticateUseCase = makeAuthenticateUseCase()
 
         const { email, password } = registerBodySchema.parse(request.body)
-        const user = await authenticateUseCase.execute({
+        const {user} = await authenticateUseCase.execute({
             email, 
             password
         })
-        return reply.status(200).send()   
+
+        const token = await reply.jwtSign(
+            {},
+            {
+                sign: {
+                    sub: user.id
+                }
+            }
+        )
+
+        return reply.status(200).send({token})   
     }
 }
