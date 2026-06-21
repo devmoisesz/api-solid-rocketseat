@@ -16,11 +16,6 @@ export class RegisterController {
             password: z.string().min(6)
         })
 
-        try {
-            
-        } catch (error) {
-            
-        }
         const registerUseCase = makeRegisterUseCase()
 
         const { name, email, password } = registerBodySchema.parse(request.body)
