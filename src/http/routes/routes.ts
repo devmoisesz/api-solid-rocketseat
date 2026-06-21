@@ -2,6 +2,7 @@ import type { FastifyInstance } from "fastify";
 import { RegisterController } from '../controllers/register.controller'
 import { AuthenticateController } from "../controllers/authenticate.controller";
 import { ProfileController } from "../controllers/profile.controller";
+import { verifyJWT } from "../middlewares/verify-jwt";
 
 const registerController = new RegisterController()
 const authenticateController = new AuthenticateController()
@@ -13,6 +14,6 @@ export async function appRoutes(app: FastifyInstance) {
 
     // Authenticated
 
-    app.get('/me', profileController.profile)
+    app.get('/me', { onRequest: [verifyJWT]},  profileController.profile)
 
 }
