@@ -11,11 +11,11 @@ describe('Validate check-in Use Case', () => {
         checkInsRepository = new InMemoryCheckInsRepository()
         validateCheckInUseCase = new ValidateCheckInUseCase(checkInsRepository)
 
-        // vi.useFakeTimers()
+        vi.useFakeTimers()
     })
 
     afterEach(() => {
-        // vi.useRealTimers()
+        vi.useRealTimers()
     })
 
     it('should be able to validate the check in', async () => {
@@ -36,6 +36,25 @@ describe('Validate check-in Use Case', () => {
         await expect(() => validateCheckInUseCase.execute({
             checkInId: 'inexistent-check-in-id'
         })
+        ).rejects.toBeInstanceOf(AppError)
+    })
+
+    it('should not be able to validate the check-in after  minutes of its creation', async () => {
+        vi.setSystemTime(new Date(2023, 0, 1, 13, 40))
+
+        const createdCheckIn = await checkInsRepository.create({
+            gym_id: 'gym-01',
+            user_id: 'user-01'
+        })
+
+        const twentyOneMinutesInMs = 1000 * 60 * 21
+
+        vi.advanceTimersByTime(twentyOneMinutesInMs)
+
+        await expect(() => 
+         validateCheckInUseCase.execute({
+            checkInId: createdCheckIn.id
+        }),
         ).rejects.toBeInstanceOf(AppError)
     })
 })
