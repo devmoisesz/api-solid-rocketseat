@@ -11,7 +11,7 @@ const validateCheckInsController = new ValidateCheckInsController()
 const historyCheckInsController = new HistoryCheckInsController()
 const metricsCheckInsController = new MetricsCheckInsController()
 
-export async function gymsRoutes(app: FastifyInstance) {
+export async function checkInsRoutes(app: FastifyInstance) {
     app.addHook('onRequest', verifyJWT)
     
     app.get('/check-ins/history', historyCheckInsController.history)
