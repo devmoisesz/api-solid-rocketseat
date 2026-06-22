@@ -1,0 +1,37 @@
+import { makeCreateGymUseCase } from '@/use-cases/factories/make-create-gym.use.case'
+import type { FastifyRequest, FastifyReply } from 'fastify'
+import { z } from 'zod'
+
+export class CreateGymsController {
+    constructor(
+        
+    ){
+        
+    }
+
+    async create(request: FastifyRequest, reply: FastifyReply){
+        const createGymBodySchema = z.object({
+            gym_name: z.string(),
+            description: z.string().nullable(),
+            phone: z.string().nullable(),
+            latitude: z.number().refine(value => {
+                return Math.abs(value) <= 90
+            }),
+            longitude: z.number().refine(value => {
+                return Math.abs(value) <= 100
+            }),
+        })
+
+        const createGymUseCase = makeCreateGymUseCase()
+
+        const { gym_name, description, phone, latitude, longitude } = createGymBodySchema.parse(request.body)
+        const gym = await createGymUseCase.execute({
+            gym_name,
+            description,
+            phone,
+            latitude,
+            longitude
+        })
+        return reply.status(201).send(gym)   
+    }
+}
