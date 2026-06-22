@@ -5,7 +5,7 @@ import { randomUUID } from 'node:crypto'
 import type { Environment } from 'vitest/environments'
 
 function generateDatabaseUrl(schema: string){
-    if(process.env.DATABASE_URL){
+    if(!process.env.DATABASE_URL){
         throw new Error('Please provide a DATABASE_URL env variable')
     }
 
@@ -30,7 +30,7 @@ export default <Environment>{
         return {
             async teardown(){
                 await prisma.$executeRawUnsafe(
-                    `DROP SCHEMA IF EXIST ${schema} CASCADE`
+                    `DROP SCHEMA IF EXISTS "${schema}" CASCADE`
                 )
 
                 await prisma.$disconnect()
