@@ -21,7 +21,7 @@ export class GymsNearbyController {
 
         const fetchNearbyGymUseCase = makeFetchNearbyGymsUseCase()
 
-        const { latitude, longitude } = nearbyGymsQuerySchema.parse(request.body)
+        const { latitude, longitude } = nearbyGymsQuerySchema.parse(request.query)
         const { gyms } = await fetchNearbyGymUseCase.execute({
             userLatitude: latitude,
             userLongitude: longitude

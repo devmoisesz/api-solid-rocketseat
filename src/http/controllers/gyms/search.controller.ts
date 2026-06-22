@@ -17,7 +17,7 @@ export class SearchGymsController {
 
         const searchGymUseCase = makeSearchGymsUseCase()
 
-        const { query, page } = searchGymsQuerySchema.parse(request.body)
+        const { query, page } = searchGymsQuerySchema.parse(request.query)
         const gym = await searchGymUseCase.execute({
             query,
             page
