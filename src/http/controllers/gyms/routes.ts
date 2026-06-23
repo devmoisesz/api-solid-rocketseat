@@ -4,6 +4,7 @@ import { verifyJWT } from "../../middlewares/verify-jwt";
 import { SearchGymsController } from "./search.controller";
 import { GymsNearbyController } from "./nearby.controller";
 import { CreateGymsController } from "./create.controller";
+import { verifyUserRole } from "@/http/middlewares/verify-user-role";
 
 const searchGymsController = new SearchGymsController()
 const nearbyGymsController = new GymsNearbyController()
@@ -15,5 +16,5 @@ export async function gymsRoutes(app: FastifyInstance) {
     app.get('/gyms/search', searchGymsController.search)
     app.get('/gyms/nearby', nearbyGymsController.nearby)
 
-    app.post('/gyms', createGymsController.create)
+    app.post('/gyms', { onRequest: [verifyUserRole('ADMIN')] }, createGymsController.create)
 }

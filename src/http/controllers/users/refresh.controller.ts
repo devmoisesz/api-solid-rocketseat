@@ -11,8 +11,10 @@ export class RefreshController {
         //Valida e decodifica o token exclusivamente dos cookies da requisição e ignorando headers ou corpo.
         await request.jwtVerify({ onlyCookie: true }) 
 
+        const { role } = request.user
+
         const token = await reply.jwtSign(
-            {},
+            {role},
             {
                 sign: {
                     sub: request.user.sub
@@ -21,7 +23,7 @@ export class RefreshController {
         )
 
         const refreshToken = await reply.jwtSign(
-            {},
+            {role},
             {
                 sign: {
                     sub: request.user.sub,
