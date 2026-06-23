@@ -1,38 +1,21 @@
 import type { FastifyRequest, FastifyReply } from 'fastify'
-import { z } from 'zod'
-import { makeAuthenticateUseCase } from '@/use-cases/factories/make-authenticate.use.case'
 
-export class AuthenticateController {
+export class RefreshController {
     constructor(
         
     ){
         
     }
 
-    async authenticate(request: FastifyRequest, reply: FastifyReply){
-        const registerBodySchema = z.object({
-            email: z.string().email(),
-            password: z.string().min(6)
-        })
-
-        try {
-            
-        } catch (error) {
-            
-        }
-        const authenticateUseCase = makeAuthenticateUseCase()
-
-        const { email, password } = registerBodySchema.parse(request.body)
-        const {user} = await authenticateUseCase.execute({
-            email, 
-            password
-        })
+    async refresh(request: FastifyRequest, reply: FastifyReply){
+        //Valida e decodifica o token exclusivamente dos cookies da requisição e ignorando headers ou corpo.
+        await request.jwtVerify({ onlyCookie: true }) 
 
         const token = await reply.jwtSign(
             {},
             {
                 sign: {
-                    sub: user.id
+                    sub: request.user.sub
                 }
             }
         )
@@ -41,7 +24,7 @@ export class AuthenticateController {
             {},
             {
                 sign: {
-                    sub: user.id,
+                    sub: request.user.sub,
                     expiresIn: '7d'
                 }
             }
